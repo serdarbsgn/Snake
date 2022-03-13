@@ -63,9 +63,7 @@ public class Game extends JPanel implements ActionListener,KeyListener {
         g.setColor(Color.GREEN);
         g.fillRect(20,20,resolutionX-40,resolutionY-40);
         g.setColor(Color.BLUE);
-        snakeStack.stream().forEach(e->{
-            g.fillOval(e[0],e[1],10,10);
-        });
+        snakeStack.forEach(e-> g.fillOval(e[0],e[1],10,10));
         g.setColor(new Color(128,0,128));
         g.fillRect(baitX,baitY,10,10);
 
