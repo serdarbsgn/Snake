@@ -118,32 +118,27 @@ public class Game extends JPanel implements ActionListener,KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
 
-        if((e.getKeyCode()== KeyEvent.VK_UP||e.getKeyCode()== KeyEvent.VK_W) && direction!=Direction.DOWN && direction !=Direction.UP)
-        {
+        if ((e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) && direction != Direction.DOWN && direction != Direction.UP) {
             direction = Direction.UP;
-            snakeCoordinates = normalizeCoordinates(snakeCoordinates[0],snakeCoordinates[1]);
+            snakeCoordinates = normalizeCoordinates(snakeCoordinates[0], snakeCoordinates[1]);
         }
-        if((e.getKeyCode()== KeyEvent.VK_DOWN||e.getKeyCode()== KeyEvent.VK_S) && direction!=Direction.DOWN && direction!=Direction.UP)
-        {
+        if ((e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) && direction != Direction.DOWN && direction != Direction.UP) {
             direction = Direction.DOWN;
-            snakeCoordinates = normalizeCoordinates(snakeCoordinates[0],snakeCoordinates[1]);
+            snakeCoordinates = normalizeCoordinates(snakeCoordinates[0], snakeCoordinates[1]);
         }
-        if((e.getKeyCode()== KeyEvent.VK_RIGHT||e.getKeyCode()== KeyEvent.VK_D) && direction!=Direction.LEFT && direction!=Direction.RIGHT)
-        {
+        if ((e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) && direction != Direction.LEFT && direction != Direction.RIGHT) {
             direction = Direction.RIGHT;
-            snakeCoordinates = normalizeCoordinates(snakeCoordinates[0],snakeCoordinates[1]);
+            snakeCoordinates = normalizeCoordinates(snakeCoordinates[0], snakeCoordinates[1]);
         }
-        if((e.getKeyCode()== KeyEvent.VK_LEFT||e.getKeyCode()== KeyEvent.VK_A) && direction!=Direction.LEFT && direction!=Direction.RIGHT)
-        {
+        if ((e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) && direction != Direction.LEFT && direction != Direction.RIGHT) {
             direction = Direction.LEFT;
-            snakeCoordinates = normalizeCoordinates(snakeCoordinates[0],snakeCoordinates[1]);
+            snakeCoordinates = normalizeCoordinates(snakeCoordinates[0], snakeCoordinates[1]);
         }
 
-        if(e.getKeyCode()== KeyEvent.VK_SPACE)
-        {
-            startGame=true;
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            startGame = true;
             direction = Direction.RIGHT;
-            snakeCoordinates = normalizeCoordinates(snakeCoordinates[0],snakeCoordinates[1]);
+            snakeCoordinates = normalizeCoordinates(snakeCoordinates[0], snakeCoordinates[1]);
         }
     }
 
@@ -153,7 +148,7 @@ public class Game extends JPanel implements ActionListener,KeyListener {
     }
 }
 
-enum Direction{
-    UP,DOWN,LEFT,RIGHT
+enum Direction {
+    UP, DOWN, LEFT, RIGHT
 }
 
