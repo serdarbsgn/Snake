@@ -9,103 +9,91 @@ import java.awt.event.KeyListener;
 import java.util.Arrays;
 import java.util.Stack;
 
-public class Game extends JPanel implements ActionListener,KeyListener {
+public class Game extends JPanel implements ActionListener, KeyListener {
 
-    int resolutionX,resolutionY;
+    int resolutionX, resolutionY;
     int[] snakeCoordinates;
     boolean startGame = false;
-    int baitX,baitY;
+    int baitX, baitY;
     int snakeSize = 1;
     Stack<int[]> snakeStack = new Stack<>();
     Direction direction;
     private final Timer timer;
 
     Game(int width, int height) {
-        resolutionX=width;
-        resolutionY=height;
-        snakeCoordinates = new int[]{resolutionX/2, resolutionY/2};
-        snakeStack.addElement(new int[]{snakeCoordinates[0] ,snakeCoordinates[1] });
+        resolutionX = width;
+        resolutionY = height;
+        snakeCoordinates = new int[]{resolutionX / 2, resolutionY / 2};
+        snakeStack.addElement(new int[]{snakeCoordinates[0], snakeCoordinates[1]});
         setBaitCoordinates();
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         int delay = 5;
-        timer = new Timer(delay,this);
+        timer = new Timer(delay, this);
         timer.start();
     }
 
-    public void setBaitCoordinates()
-    {
-        baitX = ((int)(Math.random() * (resolutionX-40)) + 20)/10*10;
-        baitY = ((int)(Math.random() * (resolutionY-40)) + 20)/10*10;
+    public void setBaitCoordinates() {
+        baitX = ((int) (Math.random() * (resolutionX - 40)) + 20) / 10 * 10;
+        baitY = ((int) (Math.random() * (resolutionY - 40)) + 20) / 10 * 10;
     }
 
-    public int[] normalizeCoordinates(int normX, int normY){
-        if(normX%10>6)
-        {
-            normX= ((normX/10)+1)*10;
-        }
-        else normX = normX/10*10;
-        if(normX%10>6)
-        {
-            normY= ((normY/10)+1)*10;
-        }
-        else normY = normY/10*10;
+    public int[] normalizeCoordinates(int normX, int normY) {
+        if (normX % 10 > 6) {
+            normX = ((normX / 10) + 1) * 10;
+        } else normX = normX / 10 * 10;
+        if (normY % 10 > 6) {
+            normY = ((normY / 10) + 1) * 10;
+        } else normY = normY / 10 * 10;
 
         return new int[]{normX, normY};
     }
 
-    public void paint(Graphics g){
+    public void paint(Graphics g) {
         requestFocus(true);
-
         g.setColor(Color.RED);
-        g.fillRect(0,0,resolutionX,resolutionY);
+        g.fillRect(0, 0, resolutionX, resolutionY);
         g.setColor(Color.GREEN);
-        g.fillRect(20,20,resolutionX-40,resolutionY-40);
+        g.fillRect(20, 20, resolutionX - 40, resolutionY - 40);
         g.setColor(Color.BLUE);
-        snakeStack.forEach(e-> g.fillOval(e[0],e[1],10,10));
-        g.setColor(new Color(128,0,128));
-        g.fillRect(baitX,baitY,10,10);
+        snakeStack.forEach(e -> g.fillOval(e[0], e[1], 10, 10));
+        g.setColor(new Color(128, 0, 128));
+        g.fillRect(baitX, baitY, 10, 10);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         timer.start();
-        if(startGame)
-        {
-            if(baitX==snakeCoordinates[0] && baitY == snakeCoordinates[1])
-            {
-                snakeSize+=1;
+        if (startGame) {
+            if (baitX == snakeCoordinates[0] && baitY == snakeCoordinates[1]) {
+                snakeSize += 1;
                 setBaitCoordinates();
             }
-            if(direction==Direction.UP && snakeCoordinates[1] > 20)
-            {
-                snakeCoordinates[1]-=2;
+            if (direction == Direction.UP && snakeCoordinates[1] > 20) {
+                snakeCoordinates[1] -= 2;
             }
-            if(direction==Direction.DOWN && snakeCoordinates[1] < resolutionY-30)
-            {
-                snakeCoordinates[1]+=2;
+            if (direction == Direction.DOWN && snakeCoordinates[1] < resolutionY - 30) {
+                snakeCoordinates[1] += 2;
             }
-            if(direction==Direction.LEFT && snakeCoordinates[0] > 20)
-            {
-                snakeCoordinates[0]-=2;
+            if (direction == Direction.LEFT && snakeCoordinates[0] > 20) {
+                snakeCoordinates[0] -= 2;
             }
-            if(direction==Direction.RIGHT && snakeCoordinates[0] < resolutionX-30 )
-            {
-                snakeCoordinates[0]+=2;
+            if (direction == Direction.RIGHT && snakeCoordinates[0] < resolutionX - 30) {
+                snakeCoordinates[0] += 2;
             }
 
-            if(snakeStack.stream().anyMatch(c-> (Arrays.equals(c, new int[]{snakeCoordinates[0], snakeCoordinates[1]}))))
-            {
+            if (snakeStack.stream().anyMatch(c -> (Arrays.equals(c, new int[]{snakeCoordinates[0], snakeCoordinates[1]})))) {
                 System.out.println("You died");
             }
 
-            if(snakeStack.size()>snakeSize*10)
-            {
+            if (snakeStack.size() > snakeSize * 10) {
                 snakeStack.removeElementAt(0);
             }
-            snakeStack.addElement(new int[]{snakeCoordinates[0] ,snakeCoordinates[1] });
+            //snakeStack.addElement(normalizeCoordinates(snakeCoordinates[0], snakeCoordinates[1]));//to get a clear snake line
+            snakeStack.addElement(new int[]{snakeCoordinates[0], snakeCoordinates[1]});//to get more fluid snake line
+
             repaint();
         }
     }
